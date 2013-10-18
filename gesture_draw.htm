@@ -70,18 +70,21 @@
     
     <body>
         <h1>Gesture Drawing</h1>
-        <canvas id="myCanvas" width="600px" height="450px" style="border:1px solid #d3d3d3;">
+       <canvas id="myCanvas" width="640px" height="480px" style="border:1px solid #d3d3d3;">
             Your browser does not support the HTML5 canvas tag.</canvas>
-        <video id="video"  style="float:right; position:inline; max-width:100%; margin-right:1em;"></video>
+        <video id="video"  style="float:right; position:inline; max-width:25%; margin-right:1em;"></video>
         <br/>
         
         
         <script>
             
             function draw(x,y){
+				var xcoordinateScaleFactor = 1.4;
+            	var ycoordinateScaleFactor = 1.6;
                 var colorcode = document.getElementById("colorpicked").value;
                 colorcode= "#"+colorcode;
-                
+                x *= xcoordinateScaleFactor;
+                y *= ycoordinateScaleFactor;
                 var c=document.getElementById("myCanvas");
                 var ctx=c.getContext("2d");
                 ctx.beginPath();

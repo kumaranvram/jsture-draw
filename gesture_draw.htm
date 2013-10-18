@@ -49,9 +49,10 @@
                                                      
                                                      coords = smoother.smooth(coords[0]);
                                                      draw(coords[0],coords[1]);
+                                                     coords[0] -= 2 * (coords[0] - 480 / 2);
                                                      $("#png").css({
-                                                                   "left":    ~~(coords[0]+ $(video).offset().left) + "px",
-                                                                   "top":     ~~(coords[1]+ $(video).offset().top) + "px",
+                                                                   "left":    ~~(coords[0] / 1.4 + $(video).offset().left) + "px",
+                                                                   "top":     ~~(coords[1] / 1.6 + $(video).offset().top) + "px",
                                                                    "width":   ~~(coords[2] ) + "px",
                                                                    "height":  ~~(coords[3]) + "px",
                                                                    "display": "block"
@@ -72,13 +73,18 @@
         <h1>Gesture Drawing</h1>
        <canvas id="myCanvas" width="640px" height="480px" style="border:1px solid #d3d3d3;">
             Your browser does not support the HTML5 canvas tag.</canvas>
-        <video id="video"  style="float:right; position:inline; max-width:25%; margin-right:1em;"></video>
+        <video id="video"  style="float:right; position:inline; max-width:25%; margin-right:1em; transform: scaleX(-1);
+       -o-transform: scaleX(-1);
+      -ms-transform: scaleX(-1);
+     -moz-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);"></video>
         <br/>
         
         
         <script>
             
             function draw(x,y){
+            	
 				var xcoordinateScaleFactor = 1.4;
             	var ycoordinateScaleFactor = 1.6;
                 var colorcode = document.getElementById("colorpicked").value;
@@ -87,6 +93,7 @@
                 y *= ycoordinateScaleFactor;
                 var c=document.getElementById("myCanvas");
                 var ctx=c.getContext("2d");
+                x -= 2 * (x - c.width / 2);
                 ctx.beginPath();
                 ctx.arc(x,y,5,0,2*Math.PI);
                 ctx.fillStyle= colorcode;

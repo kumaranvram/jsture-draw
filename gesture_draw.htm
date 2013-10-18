@@ -84,8 +84,12 @@
                 
                 var c=document.getElementById("myCanvas");
                 var ctx=c.getContext("2d");
+                ctx.beginPath();
+                ctx.arc(x,y,5,0,2*Math.PI);
                 ctx.fillStyle= colorcode;
-                ctx.fillRect(x,y,5,5); }
+                ctx.strokeStyle=colorcode;
+                ctx.fill();
+                ctx.stroke();}
             
             function erase(){
                 var c=document.getElementById("myCanvas");

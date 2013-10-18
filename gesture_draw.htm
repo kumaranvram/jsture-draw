@@ -1,88 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>Gesture Tracking</title>
-	
-	<script src="js/compatibility.js"></script>
-	<script src="js/smoother.js"></script>
-
-	
-	<script src="js/objectdetect.js"></script>
-	<script src="js/objectdetect.handfist.js"></script>
-	
-	<script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
-	<script src="js/jquery.objectdetect.js"></script>
-	
-	
-	
-	
-	<script>
-	var smoother = new Smoother(0.85, [0, 0, 0, 0, 0]);
-		
-	$(window).load(function() {
-	
-		var video = $("#video").get(0);
-		try {
-			compatibility.getUserMedia({video: true}, function(stream) {
-				try {
-					video.src = compatibility.URL.createObjectURL(stream);
-				} catch (error) {
-					video.src = stream;
-				}
-				video.play();
-				compatibility.requestAnimationFrame(tick);
-			}, function (error) {
-				alert("WebRTC not available");
-			});
-		} catch (error) {
-			alert(error);
-		}
-		
-		function tick() {
-			compatibility.requestAnimationFrame(tick);
-			
-			if (video.readyState === video.HAVE_ENOUGH_DATA) {
-				$(video).objectdetect("all", {scaleMin: 3, scaleFactor: 1.1, classifier: objectdetect.handfist}, function(coords) {
-				
-					if (coords[0]) {
-										
-						coords = smoother.smooth(coords[0]);
-						draw(coords[0],coords[1]);
-						$("#png").css({
-							"left":    ~~(coords[0]+ $(video).offset().left) + "px",
-							"top":     ~~(coords[1]+ $(video).offset().top) + "px",
-							"width":   ~~(coords[2] ) + "px",
-							"height":  ~~(coords[3]) + "px",
-							"display": "block"
-						});
-					} else {
-						$("#png").css("display", "none");
-					}
-				});
-			}
-		}
-
-	});
-    </script>
-</head>
-
-
-<body>
-<canvas id="myCanvas" width="300" height="150" style="border:1px solid #d3d3d3;">
-Your browser does not support the HTML5 canvas tag.</canvas>
-
-<script>
-function draw(x,y){
-var c=document.getElementById("myCanvas");
-var ctx=c.getContext("2d");
-ctx.fillRect(x,y,2,2); }
-
-</script>
-	<h1>Gesture Drawing</h1>
-	<video id="video" style="float:left; margin-right:1em;"></video>
-	
-	<img id = "png" src="img/fist.png" style=" position:absolute; display:none">	
-	Images are licensed under <img src="img/cc_by_sa_3.png"> by vectorarts.net
-</body>
+    <head>
+        <meta charset="utf-8">
+            <title>Gesture Tracking</title>
+            
+            <script src="js/compatibility.js"></script>
+            <script src="js/smoother.js"></script>
+            
+            
+            <script src="js/objectdetect.js"></script>
+            <script src="js/objectdetect.handfist.js"></script>
+            
+            <script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+            <script src="js/jquery.objectdetect.js"></script>
+            
+            
+            
+            
+            <script>
+                var smoother = new Smoother(0.85, [0, 0, 0, 0, 0]);
+                
+                $(window).load(function() {
+                               
+                               var video = $("#video").get(0);
+                               try {
+                               compatibility.getUserMedia({video: true}, function(stream) {
+                                                          try {
+                                                          video.src = compatibility.URL.createObjectURL(stream);
+                                                          } catch (error) {
+                                                          video.src = stream;
+                                                          }
+                                                          video.play();
+                                                          compatibility.requestAnimationFrame(tick);
+                                                          }, function (error) {
+                                                          alert("WebRTC not available");
+                                                          });
+                               } catch (error) {
+                               alert(error);
+                               }
+                               
+                               function tick() {
+                               compatibility.requestAnimationFrame(tick);
+                               
+                               if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                               $(video).objectdetect("all", {scaleMin: 3, scaleFactor: 1.1, classifier: objectdetect.handfist}, function(coords) {
+                                                     
+                                                     if (coords[0]) {
+                                                     
+                                                     coords = smoother.smooth(coords[0]);
+                                                     draw(coords[0],coords[1]);
+                                                     $("#png").css({
+                                                                   "left":    ~~(coords[0]+ $(video).offset().left) + "px",
+                                                                   "top":     ~~(coords[1]+ $(video).offset().top) + "px",
+                                                                   "width":   ~~(coords[2] ) + "px",
+                                                                   "height":  ~~(coords[3]) + "px",
+                                                                   "display": "block"
+                                                                   });
+                                                     } else {
+                                                     $("#png").css("display", "none");
+                                                     }
+                                                     });
+                               }
+                               }
+                               
+                               });
+                </script>
+    </head>
+    
+    
+    <body>
+        <h1>Gesture Drawing</h1>
+        <canvas id="myCanvas" width="600px" height="450px" style="border:1px solid #d3d3d3;">
+            Your browser does not support the HTML5 canvas tag.</canvas>
+        <video id="video"  style="float:right; position:inline; max-width:10%; margin-right:1em;"></video>
+        <br/>
+        
+        
+        <script>
+            
+            function draw(x,y){
+                var colorcode = document.getElementById("colorpicked").value;
+                colorcode= "#"+colorcode;
+                
+                var c=document.getElementById("myCanvas");
+                var ctx=c.getContext("2d");
+                ctx.fillStyle= colorcode;
+                ctx.fillRect(x,y,5,5); }
+            
+            function erase(){
+                var c=document.getElementById("myCanvas");
+                var ctx=c.getContext("2d");
+                var gradient=ctx.createLinearGradient(0,0,c.width,0);
+                gradient.addColorStop("0.01","white");
+                ctx.strokeStyle=gradient;
+                ctx.strokeText("Big smile!",10,50);
+            }
+            
+            </script>
+        
+        <script type="text/javascript" src="jscolor/jscolor.js"></script>
+        Pick Your Color <input class="color" id="colorpicked" />
+        <button id="erase" onclick="erase()">Erase</button>
+        
+        <img id = "png" src="img/fist.png" style=" position:absolute; display:none">	
+            
+    </body>
 </html>

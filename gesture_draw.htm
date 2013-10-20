@@ -122,7 +122,25 @@
         Pick Your Color <input class="color" id="colorpicked" />
         <button id="erase" onclick="erase()">Erase</button>
         <button id="download" onclick="download()">Download</button>
-        <img id = "png" src="img/fist.png" style=" position:absolute; display:none">	
+        <img id = "png" src="img/fist.png" style=" position:absolute; display:none">
+        <div id="images"> <img  name="slide" src="img/sunglasses_5.png"/>
+        <script type="text/javascript" > 
+        var slideShow=document.getElementById("images");
+        var allImages= new Array();
+        allImages=["img/sunglasses_0.png","img/sunglasses_1.png","img/sunglasses_2.png","img/sunglasses_4.png"];
+        var imageIndex=0;
+        function changeImage()
+       {
+       document.images.slide.src=allImages[imageIndex];
+       imageIndex++;
+       if(imageIndex >= allImages.length)
+       {
+       imageIndex=0;
+       }
+}
+setInterval("changeImage()",2000);
+</script>
+</div>		
             
     </body>
 </html>

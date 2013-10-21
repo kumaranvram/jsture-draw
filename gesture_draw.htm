@@ -95,7 +95,8 @@
                 var ctx=c.getContext("2d");
                 x -= 2 * (x - c.width / 2);
                 ctx.beginPath();
-                ctx.arc(x,y,5,0,2*Math.PI);
+                var radius = document.getElementById("brush_size").value;
+                ctx.arc(x,y,radius,0,2*Math.PI);
                 ctx.fillStyle= colorcode;
                 ctx.strokeStyle=colorcode;
                 ctx.fill();
@@ -120,6 +121,7 @@
         
         <script type="text/javascript" src="jscolor/jscolor.js"></script>
         Pick Your Color <input class="color" id="colorpicked" />
+        <label for="brush">Brush Size:</label><input name="brush" id="brush_size" type="range" value="5"  min="0" max="100" />
         <button id="erase" onclick="erase()">Erase</button>
         <button id="download" onclick="download()">Download</button>
         <img id = "png" src="img/fist.png" style=" position:absolute; display:none">

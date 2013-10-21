@@ -129,16 +129,22 @@
         <script type="text/javascript" > 
         var slideShow=document.getElementById("images");
         var allImages= new Array();
-        allImages=["img/sunglasses_0.png","img/sunglasses_1.png","img/sunglasses_2.png","img/sunglasses_4.png"];
-        var imageIndex=0;
-        function changeImage()
-       {
-       document.images.slide.src=allImages[imageIndex];
-       imageIndex++;
-       if(imageIndex >= allImages.length)
-       {
+        var count =2; 
+var counter=0;
+for(counter=0;counter<=count;counter++)
+{
+   allImages[counter]= "img/" + counter +".png";
+}
+var imageIndex=0;
+function changeImage()
+{
+    document.images.slide.src=allImages[imageIndex];
+    imageIndex++;
+    var length = allImages.length -1;
+    if(imageIndex >= length)
+    {
        imageIndex=0;
-       }
+    }
 }
 setInterval("changeImage()",2000);
 </script>
